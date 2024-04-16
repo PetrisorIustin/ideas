@@ -450,7 +450,7 @@
                         </div>
                         
                     </div>
-                    <div id="chat-messages">
+                    <div id="chat-messages" style="margin-bottom: 10px;">
                         <!-- chat messages -->
                         
                     </div>
@@ -500,7 +500,7 @@
                                     </div>
 
                                     <div class="message-footer">
-                                        <span class="extra-small">11:07 AM</span>
+                                        <span class="extra-small" style="font-size: 14px; color: #696969">${new Date().getHours()}:${new Date().getMinutes()} AM</span>
                                     </div>
                                 </div>
                             </div>
@@ -512,7 +512,7 @@
     `;
     
             
-      const template  = 
+      const template  = () => 
       `<div class="row">
         <div class="col-lg-6">
                 &nbsp;
@@ -539,7 +539,7 @@
                             </div>
 
                             <div class="message-footer">
-                                <span class="extra-small ">11:07 AM</span>
+                                <span class="extra-small" style="font-size: 14px; color: #696969">${new Date().getHours()}:${new Date().getMinutes()} AM</span>
                             </div>
                         </div>
                     </div>
@@ -564,7 +564,7 @@
       const chatMessages = document.getElementById('chat-messages');
       chatMessages.innerHTML += userInput(message);
         setTimeout(function() {
-            chatMessages.innerHTML += template;
+            chatMessages.innerHTML += template();
             const messageTextAll = document.querySelectorAll(`.message-text-output`);
             const messageText = messageTextAll[messageTextAll.length - 1];
 
