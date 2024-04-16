@@ -450,80 +450,16 @@
                         </div>
                         
                     </div>
-
-                    <!-- chat messages -->
-                    <div class="row">
-                        <div class="col-lg-6" id="chat-history">
-                            <div class="chat-messages">
-                                <div class="message">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                        <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
-                                    </a>
-
-                                    <div class="message-inner color-black">
-                                        <div class="message-body">
-                                            <div class="message-content">
-                                                <div class="message-text">
-                                                    <p>Hi Emma. Can you tell me how many candidates are in the final stage for the Founding Engineer position and can create a view to compare them?</p>
-                                                </div>
-
-                                                <!-- Dropdown -->
-                                            </div>
-
-                                        </div>
-
-                                        <div class="message-footer">
-                                            <span class="extra-small">08:45 PM</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            .
-                        </div>
-                        <div class="col-lg-6 mb-20" >
-                            <div class="chat-messages">
-                                <div class="message">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                        <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
-                                    </a>
-
-                                    <div class="message-inner color-black">
-                                        <div class="message-body">
-                                            <div class="message-content">
-                                                <div class="message-text">
-                                                    <p>
-                                                        Hi, Douglas! Sure. There are 3 candidates that passed the technical interview. 
-                                                        <a href="compare-final-stage.html">Here </a>
-                                                         is an overview containing all the feedback received for them.
-                                                    </p>
-                                                </div>
-
-                                                <!-- Dropdown -->
-                                            </div>
-
-                                        </div>
-
-                                        <div class="message-footer">
-                                            <span class="extra-small ">08:45 PM</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div id="chat-messages">
+                        <!-- chat messages -->
+                        
                     </div>
 
+                    
                     <div class="row align-items-center gx-0 background-white">
                         <div class="col">
                             <div  class="input-group">
                                 <textarea  id="message-input" rows="3" class="form-control px-0 border-none" placeholder="Insert your prompt" rows="1" data-emoji-input="" data-autosize="true" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
-                                     
                             </div>
                         </div>
                         <div class="col-auto">
@@ -541,10 +477,81 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERQygljMGrhzkJcNCsqPt1sQUz4jWctzXNxlwR5uIFz4NkOiYPvNxnnyz0zrt/u1" crossorigin="anonymous"></script>
 
   <script>
+
+    const userInput = (text) => 
+        `<div class="row">
+                    <div class="col-lg-6" id="chat-history">
+                        <div class="chat-messages">
+                            <div class="message">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
+                                    <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                </a>
+
+                                <div class="message-inner color-black">
+                                    <div class="message-body">
+                                        <div class="message-content">
+                                            <div class="message-text">
+                                                <p>${text}</p>
+                                            </div>
+
+                                            <!-- Dropdown -->
+                                        </div>
+
+                                    </div>
+
+                                    <div class="message-footer">
+                                        <span class="extra-small">11:07 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                </div>
+    `;
+    
+            
+      const template  = 
+      `<div class="row">
+        <div class="col-lg-6">
+                &nbsp;
+            </div>
+            <div class="col-lg-6 mb-10" >
+                <div class="chat-messages">
+                    <div class="message">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
+                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                        </a>
+
+                        <div class="message-inner color-black">
+                            <div class="message-body">
+                                <div class="message-content">
+                                    <div class="message-text">
+                                        <p class="message-text-output">
+                                            
+                                        </p>
+                                    </div>
+
+                                    <!-- Dropdown -->
+                                </div>
+
+                            </div>
+
+                            <div class="message-footer">
+                                <span class="extra-small ">11:07 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+
     const chatHistory = document.getElementById('chat-history');
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
-
+    const i = 0;
     sendButton.addEventListener('click', function() {
       const message = messageInput.value.trim();
       messageInput.value = ''; // Clear input after sending
@@ -552,48 +559,39 @@
       // Create a new row for user message
       const userMessageRow = document.createElement('div');
       userMessageRow.classList.add('row');
+    
+      
+      const chatMessages = document.getElementById('chat-messages');
+      chatMessages.innerHTML += userInput(message);
+        setTimeout(function() {
+            chatMessages.innerHTML += template;
+            const messageTextAll = document.querySelectorAll(`.message-text-output`);
+            const messageText = messageTextAll[messageTextAll.length - 1];
 
-      const userMessage = document.createElement('div');
-      userMessage.classList.add('col-lg-6');
-      userMessage.textContent = message;
-      userMessageRow.appendChild(userMessage);
-      chatHistory.appendChild(userMessageRow);
-
-      // Create a new row for automatic response
-      const responseMessageRow = document.createElement('div');
-      responseMessageRow.classList.add('row');
-
-      const responseMessage = document.createElement('div');
-      responseMessage.classList.add('col-lg-6');
-      let responseText = '';
-      switch (message.toLowerCase()) {
-        case 'hi':
-          responseText = 'dsdasdasda';
-          break;
-        case 'hello':
-          responseText = 'dsdasdasda';
-          break;
-        case 'no2o':
-          responseText = 'dsdasdasda';
-          break;  
-        case 'nonoon':
-          responseText = '111';
-          break;
-        case 'dsadsa':
-          responseText = ''; // Delay response for anchor tag
-          setTimeout(function() {
-            const anchor = document.createElement('a');
-            anchor.href = 'index.html'; // Update the link here if needed
-            anchor.textContent = 'dsadsa';
-            responseMessage.appendChild(anchor);
-          }, 2000);
-          break;
-        default:
-          responseText = 'Sorry, I don\'t understand.';
-      }
-      responseMessage.textContent = responseText;
-      responseMessageRow.appendChild(responseMessage);
-      chatHistory.appendChild(responseMessageRow);
+            let text = 'Can you be more specific?';
+            if (message.includes("Nice")) {
+                text = `Hi, Douglas! Sure. There are 3 candidates that passed the technical interview. 
+                                                <a href="compare-final-stage.html">Here </a>
+                                                    is an overview containing all the feedback received for them.`
+            }
+            if (message.includes("Hi")) {
+                text = `Hi, Douglas! Fuck off!`
+            }
+            if (message.includes("Bye")) {
+                text = `Bye, Douglas! Take care!`
+            }
+            // insert text in messageText.innerHTML over 5 seconds
+            const textArray = text.split('');
+            let count = 0;
+            const timer = setInterval(function () {
+                messageText.innerHTML = textArray.slice(0, count).join('');
+                if (count === textArray.length) {
+                    clearInterval(timer);
+                }
+                count++;
+            }, 20);
+            // insert text in messageText.innerHTML over 5 seconds
+    }, 1000);
     });
   </script>
  
@@ -616,35 +614,6 @@
             <!-- End of Footer -->
 
         </div>
-
-        
-
-
-      <script>
-        const userMessagesDiv = document.getElementById('user-messages');
-        const responseMessagesDiv = document.getElementById('response-messages');
-        const messageInput = document.getElementById('message-input');
-        const sendButton = document.getElementById('send-button');
-
-        sendButton.addEventListener('click', function() {
-          const message = messageInput.value.trim();
-          messageInput.value = ''; // Clear input after sending
-
-          // Display the user's message
-          const userMessage = document.createElement('p');
-          userMessage.textContent = message;
-          userMessagesDiv.appendChild(userMessage);
-
-          // Handle the "yes" response
-          if (message.toLowerCase() === 'yes') {
-            setTimeout(function() {
-              const responseMessage = document.createElement('p');
-              responseMessage.textContent = 'no no no';
-              responseMessagesDiv.appendChild(responseMessage);
-            }, 2000); // Simulate 2 seconds delay
-          }
-        });
-      </script>
         <!-- End of Content Wrapper -->
 
     </div>
